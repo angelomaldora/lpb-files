@@ -90,7 +90,7 @@ app.post("/users/register", async (req, res) => {
     console.log(hashedPassword);
     // Validation passed
     pool.query(
-      `SELECT * FROM users
+      `SELECT * FROM public.users
         WHERE email = $1`,
       [email],
       (err, results) => {
@@ -105,7 +105,7 @@ app.post("/users/register", async (req, res) => {
           });
         } else {
           pool.query(
-            `INSERT INTO users (name, email, password)
+            `INSERT INTO public.users (name, email, password)
                 VALUES ($1, $2, $3)
                 RETURNING id, password`,
             [name, email, hashedPassword],
